@@ -1,5 +1,6 @@
 use std::time::Instant;
 mod command_processor;
+mod pomodoro;
 
 fn main() {
     let start = Instant::now();
@@ -7,7 +8,7 @@ fn main() {
     let end = start.elapsed();
 
     // read line
-    command_processor::process("pomodoro start");
+    command_processor::process("pomodoro start 60");
 
     // What I want:
 
@@ -32,5 +33,5 @@ fn main() {
     // $ pomodoro pause    -> gets the current pomodoro instance and take a snapshot of the elapsed time
     // $ pomodoro start 60 -> If there is a pomodoro instance, should end it and start a new one
 
-    println!("Elapsed {:?}", end)
+    println!("Elapsed {:?}", end);
 }

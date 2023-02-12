@@ -1,3 +1,4 @@
+use std::time::Duration;
 // This is used to compute month reports
 struct TimeEntry {
     duration: Duration,
@@ -6,27 +7,29 @@ struct TimeEntry {
 }
 
 // This is the running instance. There should be only one at a time
-struct Pomodoro {
+pub struct Pomodoro {
     // This duration limit can be outside the struct. It looks like it doesn't belong here.
-    durationLimit: Duration, // ex: 60 minutes
-    start: Instant,          // should be imutable
-    end: Instant,            // can be mutable
+    durationLimitMinutes: Duration, // ex: 60 minutes
+    start: Instant,                 // should be imutable
+    end: Instant,                   // can be mutable
 }
 
-fn start() /* receives durationLimit */
-{
-    // Should I receive a pomodoro as param or control a global one?
+pub trait Pomodoro {
+    fn start(&self, durationLimitMinutes: Option<&str>);
 
     // [1] Compute start instante and set to Pomodoro.start
     // [2] It should trigger an end() action after durationLimit pass
+    fn pause();
+
+    fn end();
 }
 
-fn pause() {}
-
-// Should take the current pomodoro and transform into a TimeEntry
-fn end() {
-    // [1] Compute the elapsed duration and set to Pomodoro.end
-    // [2]
+impl Pomodoro for Pomodoro {
+    fn start(&self, durationLimitMinutes: Option<&str>) {
+        // self::durationLimit = durationLimitMinutes match {
+        //     Some(x) => x,
+        //     None => 60
+        // };
+        self.start
+    }
 }
-
-// Create a module just to store it like a database (mock)
