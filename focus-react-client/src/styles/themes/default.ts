@@ -25,5 +25,11 @@ export const defaultTheme = {
   'purple-200': '#e7e1f5',
   beige: 'e6e6e6',
 
+  'red-lighten-1': '#ef5350',
+  'red-lighten-2': '#e57373',
+  'red-lighten-3': '#ef9a9a',
+  'red-lighten-4': '#ffcdd2',
+  'red-lighten-5': '#ffebee',
+
   primary: '#8b70cd',
 }
