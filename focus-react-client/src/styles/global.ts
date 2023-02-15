@@ -7,6 +7,10 @@ export const GlobalStyle = createGlobalStyle`
         box-sizing: border-box;
     }
 
+    html  {
+        font-size: 10px;
+    }
+
     :focus {
         outline: 0;
         box-shadow: 0 0 02px ${(props) => props.theme['red-lighten-3']}
