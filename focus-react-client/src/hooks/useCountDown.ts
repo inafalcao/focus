@@ -5,6 +5,7 @@ export function useCountDown() {
   // const [startDate, setStartDate] = useState<number | undefined>(undefined)
   const [intervalId, setIntervalId] = useState<number | undefined>(undefined)
   const [secondsPassed, setSecondsPassed] = useState(0)
+  const [isPaused, setIsPaused] = useState(false)
 
   function end() {
     setMinutes(0)
@@ -24,6 +25,7 @@ export function useCountDown() {
         }, 1000),
       )
     }
+    setIsPaused(false)
   }
 
   useEffect(() => {
@@ -37,6 +39,7 @@ export function useCountDown() {
       clearInterval(intervalId)
       setIntervalId(undefined)
     }
+    setIsPaused(true)
   }
 
   function start(minutesAmount: number) {
@@ -46,5 +49,5 @@ export function useCountDown() {
 
   const remainingSeconds = minutes * 60 - secondsPassed
 
-  return [start, end, pause, resume, remainingSeconds] as const
+  return { start, end, pause, resume, isPaused, remainingSeconds } as const
 }

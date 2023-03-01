@@ -32,7 +32,8 @@ interface WorkSprint {
 export function Home() {
   const [workSprints, setWorkSprints] = useState<WorkSprint[]>([])
   const [activeSprintId, setActiveSprintId] = useState<string | undefined>()
-  const [start, end, pause, resume, remainingSeconds] = useCountDown()
+  const { start, pause, end, resume, isPaused, remainingSeconds } =
+    useCountDown()
 
   const { register, handleSubmit, reset /*, watch, formState */ } =
     useForm<WorkSprintForm>({
@@ -60,6 +61,14 @@ export function Home() {
 
       console.log(`startando countdown com ${newSprint.minutes}`)
       start(newSprint.minutes)
+    }
+  }
+
+  function onToggleResume() {
+    if (!isPaused) {
+      pause()
+    } else {
+      resume()
     }
   }
 
@@ -105,8 +114,8 @@ export function Home() {
           )}
 
           {activeSprint && (
-            <CountDownButton onClick={() => pause()} type="button">
-              <Pause size={24} />
+            <CountDownButton onClick={() => onToggleResume()} type="button">
+              {isPaused ? <Play size={24} /> : <Pause size={24} />}
             </CountDownButton>
           )}
 
