@@ -59,7 +59,6 @@ export function Home() {
       setActiveSprintId(id)
       setWorkSprints((state) => [...state, newSprint])
 
-      console.log(`startando countdown com ${newSprint.minutes}`)
       start(newSprint.minutes)
     }
   }
@@ -70,6 +69,12 @@ export function Home() {
     } else {
       resume()
     }
+  }
+
+  function onFinishTask() {
+    end()
+    setActiveSprintId(null)
+    // todo: compute the total amount of time passed to add on the task itself
   }
 
   const activeSprint = workSprints.find(
@@ -122,7 +127,7 @@ export function Home() {
           {activeSprint && (
             <CountDownButton
               className="danger"
-              onClick={() => end()}
+              onClick={() => onFinishTask()}
               type="button"
             >
               <Stop size={24} />

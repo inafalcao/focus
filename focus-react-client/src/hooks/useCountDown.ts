@@ -8,9 +8,10 @@ export function useCountDown() {
   const [isPaused, setIsPaused] = useState(false)
 
   function end() {
-    setMinutes(0)
     clearInterval(intervalId)
     setIntervalId(undefined)
+    setMinutes(0)
+    setSecondsPassed(0)
   }
 
   function resume() {
