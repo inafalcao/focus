@@ -14,7 +14,7 @@ export function useCountDown(onEnd: () => void) {
         case 'START':
           return { ...state, minutes: action.payload }
 
-        case 'INCREMENT_COUNT': {
+        case 'RESUME': {
           const secondsPassed = state.secondsPassed + 1
           const isCountDownFinished = secondsPassed >= state.minutes * 60
 
@@ -22,6 +22,7 @@ export function useCountDown(onEnd: () => void) {
             ...state,
             secondsPassed,
             minutes: isCountDownFinished ? 0 : state.minutes,
+            isPaused: false,
           }
         }
 
@@ -61,9 +62,10 @@ export function useCountDown(onEnd: () => void) {
   }, [countDown.minutes])
 
   function resume() {
+    dispatch({ type: 'RESUME' })
     if (!countDown.intervalId) {
       const intervalId = setInterval(function () {
-        dispatch({ type: 'INCREMENT_COUNT' })
+        dispatch({ type: 'RESUME' })
       }, 1000)
 
       dispatch({ type: 'SET_INTERVAL', payload: intervalId })

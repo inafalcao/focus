@@ -66,9 +66,7 @@ export function Home() {
   function onToggleResume() {
     if (!isPaused) {
       pause()
-      console.log('pausou')
     } else {
-      console.log('resumiu ')
       resume()
       console.log(isPaused)
     }
