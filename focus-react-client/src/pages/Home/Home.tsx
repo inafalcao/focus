@@ -12,7 +12,7 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as zod from 'zod'
 import { useState } from 'react'
-import { useCountDown } from '../../hooks/useCountDown'
+import { useCountDown } from '../../hooks/useCountDown/useCountDown'
 
 const newWorkSprintValidationSchema = zod.object({
   task: zod.string().min(1, 'Inform the task.'),
@@ -32,8 +32,8 @@ interface WorkSprint {
 export function Home() {
   const [workSprints, setWorkSprints] = useState<WorkSprint[]>([])
   const [activeSprintId, setActiveSprintId] = useState<string | undefined>()
-  const { start, pause, end, resume, isPaused, remainingSeconds } =
-    useCountDown()
+  const { start, pause, resume, end, isPaused, remainingSeconds } =
+    useCountDown(onFinishTask)
 
   const { register, handleSubmit, reset /*, watch, formState */ } =
     useForm<WorkSprintForm>({
@@ -59,21 +59,26 @@ export function Home() {
       setActiveSprintId(id)
       setWorkSprints((state) => [...state, newSprint])
 
-      start(newSprint.minutes)
+      start(/* newSprint.minutes */ 0.1)
     }
   }
 
   function onToggleResume() {
     if (!isPaused) {
       pause()
+      console.log('pausou')
     } else {
+      console.log('resumiu ')
       resume()
+      console.log(isPaused)
     }
   }
 
   function onFinishTask() {
-    end()
+    console.log('CountDown finished')
     setActiveSprintId(null)
+
+    // todo: add task to the list inside the context
     // todo: compute the total amount of time passed to add on the task itself
   }
 
@@ -127,7 +132,7 @@ export function Home() {
           {activeSprint && (
             <CountDownButton
               className="danger"
-              onClick={() => onFinishTask()}
+              onClick={() => end()}
               type="button"
             >
               <Stop size={24} />
